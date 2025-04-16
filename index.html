@@ -32,7 +32,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             padding: 0 20px;
             height: 100%;
@@ -41,7 +41,6 @@
         .logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             margin: 0;
             padding: 0;
             height: 100%;
@@ -265,37 +264,46 @@
 
         @media (max-width: 768px) {
             .header {
-                height: 200px;
-                padding: 20px 0;
+                height: 130px;
+                padding: 15px 0;
             }
 
             .header-container {
-                padding: 0 15px;
-                justify-content: center;
-                align-items: center;
+                justify-content: center !important;
+                width: 100%;
             }
 
             .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
                 margin: 0;
             }
 
             .logo img {
-                height: 160px;
-                width: auto;
-                max-width: none;
+                height: 100px;
             }
 
             #tester-wrapper {
-                padding-top: 220px;
-                margin-top: 20px;
+                padding-top: 140px;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            #fireprobe #tester {
+                margin-top: 0;
+                width: 100%;
+                padding: 0 15px;
+                box-sizing: border-box;
             }
 
             .main-title {
-                margin-top: 40px;
-            }
-
-            .main-title, .main-title * {
-                font-size: 28px;
+                width: 100%;
+                margin: 20px auto;
+                padding: 0 15px;
+                box-sizing: border-box;
             }
 
             #fireprobe #gauge-canvas.stage2,
@@ -413,15 +421,15 @@
 
         @media (max-width: 480px) {
             .header {
-                height: 180px;
+                height: 130px;
             }
 
             .logo img {
-                height: 140px;
+                height: 90px;
             }
 
             #tester-wrapper {
-                padding-top: 200px;
+                padding-top: 130px;
             }
 
             .main-title, .main-title * {
@@ -436,6 +444,27 @@
             
             .logo {
                 transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+
+            #fireprobe {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .main-title, .main-title * {
+                width: 100%;
+                box-sizing: border-box;
+                word-wrap: break-word;
             }
         }
     </style>
