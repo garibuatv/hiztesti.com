@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <title>
+        Hız Testi - Geniş Bant İnternet Hız Testi - hiztest.com
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #fff;
+            padding: 22px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            height: 65px;
+            box-sizing: border-box;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: 'Roboto', sans-serif;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-left: -320px;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            color: #3c3c47;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ad5956;
+        }
+
+        #tester-wrapper {
+            padding-top: 70px;
+            position: relative;
+            background-color: #f5f5f5;
+        }
+
+        #fireprobe {
+            margin-top: 0;
+            background-color: #f5f5f5;
+        }
+
+        #fireprobe #tester {
+            margin-top: 4%;
+            background-color: #f5f5f5;
+        }
+
+        .main-title, .main-title * {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 50px;
+            letter-spacing: -0.02em;
+            line-height: 52px;
+            color: #3c3c47;
+        }
+
+        .main-title {
+            text-align: center;
+            margin-bottom: 24px;
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title br {
+            margin-bottom: 10px;
+        }
+
+        .hover-text {
+            display: inline-block;
+            padding: 0 10px;
+            transition: all 1s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hover-text::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 35%;
+            background: linear-gradient(90deg, #cbb3b3 , #ad5956 );
+            z-index: -1;
+            transition: all 1s ease;
+            transform-origin: bottom;
+        }
+
+        .hover-text:hover {
+            color: #000;
+        }
+
+        .hover-text:hover::after {
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: scaleY(1);
+        }
+
+        .no-break {
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        #fireprobe #gauge-canvas.stage2 {
+            display: block;
+            width: 40%;
+            position: absolute;
+            left: 2%;
+            top: 0;
+            margin-top: 1.5%;
+        }
+
+        #fireprobe #gauge-canvas-2.stage2 {
+            display: block;
+            width: 40%;
+            position: absolute;
+            left: 2%;
+            top: 0;
+            margin-top: 1.5%;
+        }
+
+        #fireprobe .current.stage2 {
+            display: block;
+            position: absolute;
+            width: 20%;
+            left: 12%;
+            margin-top: 16%;
+        }
+
+        #fireprobe .current .value .value-1 {
+            font-size: 5vw;
+        }
+
+        #fireprobe .current .value .value-2 {
+            font-size: 1.8vw;
+        }
+
+        #fireprobe .download.stage2,
+        #fireprobe .download.stage3 {
+            display: block;
+            position: absolute;
+            width: 12%;
+            left: 55%;
+            margin-top: 8%;
+        }
+
+        #fireprobe .upload.stage2,
+        #fireprobe .upload.stage3 {
+            display: block;
+            position: absolute;
+            width: 12%;
+            left: 75%;
+            margin-top: 8%;
+        }
+
+        #fireprobe #download-chart-canvas.stage2,
+        #fireprobe #download-chart-canvas.stage3 {
+            display: block;
+            width: 10% !important;
+            height: auto !important;
+            position: absolute;
+            left: 56%;
+            margin-top: 14%;
+        }
+
+        #fireprobe #upload-chart-canvas.stage2,
+        #fireprobe #upload-chart-canvas.stage3 {
+            display: block;
+            width: 10% !important;
+            height: auto !important;
+            position: absolute;
+            left: 76%;
+            margin-top: 14%;
+        }
+
+        #fireprobe .ping.stage2,
+        #fireprobe .ping.stage3 {
+            display: block;
+            position: absolute;
+            width: 12%;
+            left: 55%;
+            margin-top: 22%;
+        }
+
+        #fireprobe .jitter.stage2,
+        #fireprobe .jitter.stage3 {
+            display: block;
+            position: absolute;
+            width: 12%;
+            left: 75%;
+            margin-top: 22%;
+        }
+
+        #fireprobe .testing-mode.stage2 {
+            left: 47%;
+            margin-top: 3%;
+        }
+
+        #fireprobe .progress.stage2 {
+            width: 20%;
+            left: 12%;
+            margin-top: 32%;
+        }
+
+        #fireprobe #restart.stage3 {
+            width: 14%;
+            left: 13%;
+            margin-top: 32%;
+            font-size: 1.4vw;
+            padding: 8px 0;
+        }
+
+        #fireprobe .result .label {
+            font-size: 1.4vw;
+        }
+
+        #fireprobe .result .value .value-1 {
+            font-size: 2.5vw;
+        }
+
+        #fireprobe .result .value .value-2 {
+            font-size: 1.7vw;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 55px;
+                padding: 15px 0;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .logo {
+                margin-left: -50px;
+            }
+
+            #tester-wrapper {
+                padding-top: 55px;
+            }
+
+            .main-title, .main-title * {
+                font-size: 32px;
+                line-height: 38px;
+            }
+
+            #fireprobe #gauge-canvas.stage2,
+            #fireprobe #gauge-canvas-2.stage2 {
+                width: 85%;
+                left: 7.5%;
+                margin-top: 5%;
+            }
+
+            #fireprobe .current.stage2 {
+                width: 50%;
+                left: 25%;
+                margin-top: 45%;
+                text-align: center;
+            }
+
+            #fireprobe .current .value .value-1 {
+                font-size: 8vw;
+            }
+
+            #fireprobe .current .value .value-2 {
+                font-size: 4vw;
+            }
+
+            #fireprobe .download.stage2,
+            #fireprobe .download.stage3 {
+                width: 40%;
+                left: 5%;
+                margin-top: 65%;
+            }
+
+            #fireprobe .upload.stage2,
+            #fireprobe .upload.stage3 {
+                width: 40%;
+                right: 5%;
+                left: auto;
+                margin-top: 65%;
+            }
+
+            #fireprobe #download-chart-canvas.stage2,
+            #fireprobe #download-chart-canvas.stage3 {
+                width: 35% !important;
+                left: 7.5%;
+                margin-top: 75%;
+            }
+
+            #fireprobe #upload-chart-canvas.stage2,
+            #fireprobe #upload-chart-canvas.stage3 {
+                width: 35% !important;
+                right: 7.5%;
+                left: auto;
+                margin-top: 75%;
+            }
+
+            #fireprobe .ping.stage2,
+            #fireprobe .ping.stage3 {
+                width: 40%;
+                left: 5%;
+                margin-top: 90%;
+            }
+
+            #fireprobe .jitter.stage2,
+            #fireprobe .jitter.stage3 {
+                width: 40%;
+                right: 5%;
+                left: auto;
+                margin-top: 90%;
+            }
+
+            #fireprobe .result .label {
+                font-size: 3.5vw;
+            }
+
+            #fireprobe .result .value .value-1 {
+                font-size: 5vw;
+            }
+
+            #fireprobe .result .value .value-2 {
+                font-size: 3vw;
+            }
+
+            #fireprobe .testing-mode.stage2 {
+                left: 50%;
+                transform: translateX(-50%);
+                margin-top: 10%;
+                text-align: center;
+                width: 80%;
+            }
+
+            #fireprobe .progress.stage2 {
+                width: 70%;
+                left: 15%;
+                margin-top: 105%;
+            }
+
+            #fireprobe #restart.stage3 {
+                width: 50%;
+                left: 25%;
+                margin-top: 115%;
+                font-size: 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="https://www.hiztest.com" class="logo">
+                <img src="images/logo_footer_multi_color.png" alt="hiztest.com logo">
+            </a>
+        </div>
+    </header>
+    <div id="tester-wrapper">
+        <div id="fireprobe" class="tfr">
+            <div class="name">
+                <h1 class="main-title">
+                    <span class="no-break">Anlık, doğru ve</span><br>
+                    <span class="no-break">güvenilir 
+                        <span class="hover-text">hız testi.</span>
+                    </span>
+                </h1>
+
+                <style>
+                    .fb-like.fb_iframe_widget>span {
+                        min-width: 170px !important;
+                    }
+
+                    .fb-like.fb_iframe_widget iframe {
+                        min-width: 170px !important;
+                    }
+                </style>
+
+                <div id="fb">
+                    <div id="fb-root" data-scale-unit="dönüşüm-ölçeği"></div>
+                    <script async defer crossorigin="anonymous"
+                        src="js/sdk.js#xfbml=1&amp;version=v8.0&amp;appId=916451681811384&amp;autoLogAppEvents=1"
+                        nonce="qIL6a5va"></script>
+                    <div class="fb-like" data-width="200" data-layout="button_count" data-size="large" data-share="true"></div>
+                </div>
+            </div>
+
+            <div id="tester">
+                <canvas id="start-canvas" width="500" height="500">
+                    <p></p>
+                </canvas>
+
+                <div class="start yukleniyor">
+                    <div class="text" data-scale="3.0" data-scale-portrait="10.0" data-scale-src="body" data-scale-attr="font-boyutu">
+                        <div class="wave">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <span class="label">BAŞLAT</span>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div id="server">
+                    <canvas id="server-canvas" width="36" height="36"></canvas>
+                    <div class="server spacer">
+                        <span class="title">En iyi sunucu aranıyor...</span>
+                        <span class="value"></span>
+                    </div>
+                </div>
+
+                <div class="ip spacer">
+                    <span class="title">IP:</span>
+                    <span class="value">...</span>
+                </div>
+
+                <div class="isp spacer tfr">
+                    <span class="title">Sağlayıcı:</span>
+                    <span class="value">...</span>
+                </div>
+                <div class="powered">
+                    <span class="title"></span>
+                    <span class="value">
+                        <a href="https://www.hiztest.com">hiztest.com</a>
+                    </span>
+                </div>
+                <canvas id="testing-mode-canvas" width="100" height="100"></canvas>
+                <div class="testing-mode">
+                    <span class="title tfr">Test Ediliyor:</span>
+                    <br>
+                    <span class="value tfr">Ping</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="current result">
+                    <div class="current-result value">
+                        <span class="value-1 tfr">...</span>
+                        <br>
+                        <span class="value-2 tfr">Mb/s</span>
+                    </div>
+                </div>
+                <div class="download result">
+                    <div class="download-label label tfr">İndirme:</div>
+                    <div class="download-result value">
+                        <span class="value-1 tfr">...</span>
+                        <span class="value-2 tfr">Mb/s</span>
+                    </div>
+                </div>
+                <canvas id="download-chart-canvas" width="250" height="100"></canvas>
+                <div class="upload result">
+                    <div class="upload-label label tfr">Yükleme:</div>
+                    <div class="upload-result value">
+                        <span class="value-1 tfr">...</span>
+                        <span class="value-2 tfr">Mb/s</span>
+                    </div>
+                </div>
+                <canvas id="upload-chart-canvas" width="250" height="100"></canvas>
+                <div class="ping result">
+                    <div class="ping-label label tfr">Ping:</div>
+                    <div class="ping-result value">
+                        <span class="value-1 tfr">...</span>
+                        <span class="value-2 tfr">ms</span>
+                    </div>
+                </div>
+                <div class="jitter result">
+                    <div class="jitter-label label tfr">Gecikme:</div>
+                    <div class="jitter-result value">
+                        <span class="value-1 tfr">...</span>
+                        <span class="value-2 tfr">ms</span>
+                    </div>
+                </div>
+                <canvas id="gauge-canvas" width="1100" height="850"></canvas>
+                <canvas id="gauge-canvas-2" width="1100" height="850"></canvas>
+                <a href="#" id="restart" class="tfr">YENİDEN BAŞLAT</a>
+
+                <div class="result--share-buttons-wrapper bg-primary">
+                    <div class="result--share-buttons" data-scale="1.6" data-scale-portrait="3.6" data-scale-src="body" data-scale-attr="font-boyutu">
+                        <span data-popup="https://www.facebook.com/sharer/sharer.php?u=https://hiztest.com" id="shareFacebook" title="Facebook'ta Paylaş" class="cursor-pointer">
+                            <i class="fab fa-facebook"></i>
+                        </span>
+
+                        <span data-popup="https://twitter.com/intent/tweet?url=https://hiztest.com" id="shareTwitter" title="Twitter'da Paylaş" class="cursor-pointer">
+                            <i class="fab fa-twitter"></i>
+                        </span>
+
+                        <a data-onclick-copy data-selector="true" aria-label="Doğrudan bağlantı kopyalandı" data-balloon-pos="up" data-onclick-copy-data="https://hiztest.com" id="shareUrl" title="Bağlantıyı Kopyala" class="cursor-pointer">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#" id="share" class="tfr">PAYLAŞ</a>
+                <a href="#" id="approve" class="tfr">ONAYLA</a>
+                <div class="select-server-wrapper-dummy"></div>
+                <div class="select-server-wrapper">
+                    <div class="title tfr">SUNUCU SEÇ</div>
+                    <canvas id="server-select-close-canvas" width="36" height="36"></canvas>
+                    <br>
+                    <div id="select-server" class="select-server scrollbar-inner">
+                        <div class="s-server server-empty">
+                            <canvas class="server-canvas" width="36" height="36"></canvas>
+                            <div class="server-info">
+                                <div class="server-name tfr"></div>
+                                <div class="server-loc tfr"></div>
+                            </div>
+                            <div class="server-latency tfr">
+                                <span class="value-1"></span>
+                                <span class="value-2"></span>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-wrapper">
+                    <div class="icon web s5">
+                        <div class="image"></div>
+                        <div class="wrapper">
+                            <div class="text tfr">
+                                <span class="title">
+                                    WEB TARAMA:
+                                </span>
+                                <span class="value">
+                                    <span class="value-1">5</span>/<span class="value-2">5</span>
+                                </span>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar bar-1"></div>
+                                <div class="bar bar-2"></div>
+                                <div class="bar bar-3"></div>
+                                <div class="bar bar-4"></div>
+                                <div class="bar bar-5"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="icon stream-lq s4">
+                        <div class="image"></div>
+                        <div class="wrapper">
+                            <div class="text tfr">
+                                <span class="title">
+                                    VİDEO AKIŞI (DÜŞÜK KALİTE):
+                                </span>
+                                <span class="value">
+                                    <span class="value-1">5</span>/<span class="value-2">5</span>
+                                </span>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar bar-1"></div>
+                                <div class="bar bar-2"></div>
+                                <div class="bar bar-3"></div>
+                                <div class="bar bar-4"></div>
+                                <div class="bar bar-5"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="icon stream-hq s3">
+                        <div class="image"></div>
+                        <div class="wrapper">
+                            <div class="text tfr">
+                                <span class="title">
+                                    VİDEO AKIŞI (YÜKSEK KALİTE):
+                                </span>
+                                <span class="value">
+                                    <span class="value-1">5</span>/<span class="value-2">5</span>
+                                </span>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar bar-1"></div>
+                                <div class="bar bar-2"></div>
+                                <div class="bar bar-3"></div>
+                                <div class="bar bar-4"></div>
+                                <div class="bar bar-5"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="icon calls s2">
+                        <div class="image"></div>
+                        <div class="wrapper">
+                            <div class="text tfr">
+                                <span class="title">
+                                    GÖRÜNTÜLÜ KONUŞMA (SKYPE, WHATSAPP):
+                                </span>
+                                <span class="value">
+                                    <span class="value-1">5</span>/<span class="value-2">5</span>
+                                </span>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar bar-1"></div>
+                                <div class="bar bar-2"></div>
+                                <div class="bar bar-3"></div>
+                                <div class="bar bar-4"></div>
+                                <div class="bar bar-5"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="icon games s1">
+                        <div class="image"></div>
+                        <div class="wrapper">
+                            <div class="text tfr">
+                                <span class="title">
+                                    ÇEVRİMİÇİ OYUNLAR:
+                                </span>
+                                <span class="value">
+                                    <span class="value-1">5</span>/<span class="value-2">5</span>
+                                </span>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar bar-1"></div>
+                                <div class="bar bar-2"></div>
+                                <div class="bar bar-3"></div>
+                                <div class="bar bar-4"></div>
+                                <div class="bar bar-5"></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <a class="mad"></a>
+            </div>
+        </div>
+    </div>
+
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/fireprobe.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:100,200,300,400" rel="stylesheet">
+
+    <script>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-4023970-30']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/external.js" type="text/javascript"></script>
+    <script src="js/fireprobe.js" type="text/javascript"></script>
+    <script src="js/fireprobe.graphics.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            fireprobe = new fireProbeApp('https://www.fireprobe.net/api/gateway', 569, logger.BILGI);
+            fireprobe.initialize();
+        });
+
+        function fireProbeEvent(data) {
+            _gaq.push(['_trackEvent', 'FireProbe', data]);
+        }
+
+        function fireProbeStats(data) {
+        }
+
+        let orijinalUrl = window.location.href;
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('#fireprobe .start').show();
+            }, 200);
+        });
+
+        $('body').on('fireprobe_test_started', function () {
+            window.history.replaceState({}, undefined, orijinalUrl);
+            $('#tester-wrapper').addClass('baslatildi');
+            $('.tester').addClass('baslatildi');
+            $('.add-server-to-our-platform').addClass('baslatildi');
+            $('.result--share-buttons-wrapper').addClass('gizli');
+        });
+
+        $('body').on('fireprobe_graphics_initialized', function () {
+            $('#fireprobe .start').removeClass('yukleniyor');
+            $('#fireprobe .start .text').attr('data-scale', '4.5');
+            $('#fireprobe .start .text').attr('data-scale-portrait', '12.0');
+            $('body').get(0).dispatchEvent(new Event('fireprobe_rescale'));
+        });
+
+        window.onpopstate = function () { location.reload() }
+
+        $('body').on('fireprobe_test_finnished', function (e, data) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "https://hiztest.com/api/gateway",
+                cache: false,
+                processData: true,
+                data: {
+                    action: 'sonuc',
+                    download: data.download,
+                    upload: data.upload,
+                    jitter: data.jitter,
+                    latency: data.latency
+                },
+                success: function (_data) {
+                    window.history.pushState({}, undefined, _data.sonucUrl);
+                    $('#shareFacebook').attr('data-popup', 'https://www.facebook.com/sharer/sharer.php?u=' + _data.sonucUrl);
+                    $('#shareTwitter').attr('data-popup', 'https://twitter.com/intent/tweet?url=' + _data.sonucUrl);
+                    $('#shareUrl').attr('data-onclick-copy-data', _data.sonucUrl);
+                    $('.result--share-buttons-wrapper').removeClass('gizli');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
