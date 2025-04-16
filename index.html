@@ -6,6 +6,15 @@
     <title>
         Hız Testi - Geniş Bant İnternet Hız Testi - hiztest.com
     </title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HH6QCYQ7HC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-HH6QCYQ7HC');
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -264,46 +273,36 @@
 
         @media (max-width: 768px) {
             .header {
-                height: 130px;
-                padding: 15px 0;
+                height: 200px;
+                padding: 20px 0;
             }
 
             .header-container {
-                justify-content: center !important;
-                width: 100%;
+                justify-content: center;
+                padding: 0 15px;
             }
 
             .logo {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
                 margin: 0;
             }
 
             .logo img {
-                height: 100px;
+                height: 160px;
+                width: auto;
+                max-width: none;
             }
 
             #tester-wrapper {
-                padding-top: 140px;
-                width: 100%;
-                max-width: 100%;
-                margin: 0;
-                box-sizing: border-box;
-            }
-
-            #fireprobe #tester {
-                margin-top: 0;
-                width: 100%;
-                padding: 0 15px;
-                box-sizing: border-box;
+                padding-top: 220px;
+                margin-top: 20px;
             }
 
             .main-title {
-                width: 100%;
-                margin: 20px auto;
-                padding: 0 15px;
-                box-sizing: border-box;
+                margin-top: 40px;
+            }
+
+            .main-title, .main-title * {
+                font-size: 28px;
             }
 
             #fireprobe #gauge-canvas.stage2,
@@ -421,15 +420,15 @@
 
         @media (max-width: 480px) {
             .header {
-                height: 130px;
+                height: 280px;
             }
 
             .logo img {
-                height: 90px;
+                height: 240px;
             }
 
             #tester-wrapper {
-                padding-top: 130px;
+                padding-top: 200px;
             }
 
             .main-title, .main-title * {
@@ -444,27 +443,6 @@
             
             .logo {
                 transform: scale(0.8);
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                overflow-x: hidden;
-            }
-
-            #fireprobe {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            .main-title, .main-title * {
-                width: 100%;
-                box-sizing: border-box;
-                word-wrap: break-word;
             }
         }
     </style>
