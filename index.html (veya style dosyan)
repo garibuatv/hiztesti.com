@@ -1,8 +1,0 @@
-body {
-    background-image: url('images/Backgroundd.webp');
-}
-@supports not (background-image: url("images/Backgroundd.webp")) {
-    body {
-        background-image: url('images/Backgroundd.jpg');
-    }
-} 
